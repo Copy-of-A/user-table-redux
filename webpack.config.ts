@@ -15,9 +15,9 @@ export default (_: never, { mode = 'development' }: IWebpackArgs): Configuration
 
     entry: './src/index',
     output: {
-      path: path.resolve(__dirname, 'dist'),
+      path: path.resolve(__dirname, 'docs'),
       filename: 'user-table-bundle.js',
-      publicPath: 'auto'
+      publicPath: '/user-table-redux/'
     },
 
     resolve: {
