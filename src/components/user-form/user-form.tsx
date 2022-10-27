@@ -58,7 +58,7 @@ export const UserForm = ({ user, form }: IUserFormProps) => {
       <Form.Item name="cell" label="Телефон" rules={[{ required: true }]}>
         <Input />
       </Form.Item>
-      <Form.Item name="date" label="DatePicker" rules={[{ required: true }]}>
+      <Form.Item name="date" label="Дата рождения" rules={[{ required: true }]}>
         <DatePicker disabledDate={(current) => current > moment()} />
       </Form.Item>
       <Form.Item {...tailLayout}>
