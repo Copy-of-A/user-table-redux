@@ -22,7 +22,8 @@ export interface IUser {
 export interface IEditableUser {
   name: IUserName
   email: string
-  phone: string
+  cell: string
+  dob: IDateRange
 }
 
 interface IDateRange {

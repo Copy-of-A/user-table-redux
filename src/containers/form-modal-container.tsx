@@ -11,6 +11,12 @@ interface FormModalContainerProps {
   user: IUser
 }
 
+const calculateAge = (birthday: Date) => { // birthday is a date
+  var ageDifMs = Date.now() - birthday.getTime();
+  var ageDate = new Date(ageDifMs); // miliseconds from epoch
+  return Math.abs(ageDate.getUTCFullYear() - 1970);
+}
+
 export const FormModalContainer = ({user}: FormModalContainerProps) => {
   const dispatch = useAppDispatch()
   const [form] = useForm();
@@ -18,17 +24,20 @@ export const FormModalContainer = ({user}: FormModalContainerProps) => {
   const handleOk = () => {
     form
       .validateFields()
-      .then((values: any) => {
-        console.log("values, ", values)
+      .then((values) => {
         form.resetFields();
         dispatch(edit({
           ...user,
           email: values.email,
-          phone: values.phone,
+          cell: values.cell,
           name: {
             title: values.title ?? user.name.title,
             first: values.first,
             last: values.last
+          },
+          dob: {
+            date: values.date,
+            age: calculateAge(new Date(values.date))
           }
         }));
         dispatch(setUser(null))
@@ -43,7 +52,7 @@ export const FormModalContainer = ({user}: FormModalContainerProps) => {
 
   console.log("FormModal")
   return (
-    <Modal title="Basic Modal" visible={!!user} onOk={handleOk} onCancel={handleCancel}>
+    <Modal title={`Изменить данные пользователя ${user.login.username}`} visible={!!user} onOk={handleOk} onCancel={handleCancel}>
       <UserForm user={user} form={form} />
     </Modal>
   )
