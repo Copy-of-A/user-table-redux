@@ -7,7 +7,7 @@ import './app-layout.less'
 
 export const AppLayout = ({ children, actions }: IAppLayoutProps) => {
   const items = useMemo(
-    () => actions?.map(({ key, title, action }) => ({ key: key ?? title, label: title, onClick: () => { action() } })) ?? [],
+    () => actions?.map(({ key, title, action }) => ({ key: key ?? title, label: title, onClick: action })) ?? [],
     [ actions ])
 
   return <Layout className="app-layout">

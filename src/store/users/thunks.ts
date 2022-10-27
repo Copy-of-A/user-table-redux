@@ -9,3 +9,11 @@ export const generate = createAsyncThunk(
     return users
   }
 )
+
+export const add = createAsyncThunk(
+  'users.add',
+  async () => {
+    const user = await randomuser(1)
+    return user[0]
+  }
+)
