@@ -19,6 +19,12 @@ export interface IUser {
   location: ILocation
 }
 
+export interface IEditableUser {
+  name: IUserName
+  email: string
+  phone: string
+}
+
 interface IDateRange {
   age: number
   date: string

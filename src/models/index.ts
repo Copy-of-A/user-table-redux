@@ -1,1 +1,1 @@
-export type { IUser, IRandomuserResult } from './randomuser'
+export type { IUser, IRandomuserResult, IEditableUser } from './randomuser'

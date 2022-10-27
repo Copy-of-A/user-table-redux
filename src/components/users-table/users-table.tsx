@@ -9,6 +9,7 @@ import { IUsersTableProps } from './types'
 import './users-table.less'
 import { useAppDispatch } from '../../store'
 import { remove } from '../../store/users/actions'
+import { setUser } from '../../store/form-modal/actions'
 
 export const UsersTable = ({ loading, users }: IUsersTableProps) => {
   const [height, setTableHeight] = useState(undefined)
@@ -51,7 +52,7 @@ export const UsersTable = ({ loading, users }: IUsersTableProps) => {
       render: (user) => (
         <Popconfirm
           title="Are you sure to delete this task?"
-          onConfirm={() => confirm(user)}
+          onConfirm={() => _confirm(user)}
           onCancel={cancel}
           okText="Yes"
           cancelText="No"
@@ -61,28 +62,32 @@ export const UsersTable = ({ loading, users }: IUsersTableProps) => {
       )
     }
   ]
+  
   const handleDeleteClick = (user: IUser) => {
     dispatch(remove(user))
   }
 
-  const confirm = (user: IUser) => {
+  const _confirm = (user: IUser) => {
     handleDeleteClick(user)
     message.success('Пользователь удален');
   };
+
+  const handleRowDoubleClick = (user: IUser) => {
+    dispatch(setUser(user))
+  }
 
   const heighDelta = 39 // 39 - высота заголовка таблицы
   return <ResizeObserver onResize={({ height: componentHeight }) => setTableHeight(Math.max(0, componentHeight - heighDelta))}>
     <div className="users-table">
       <Table size="small" loading={loading} dataSource={users} columns={columns}
         scroll={{ y: height }} pagination={false} rowKey={keySelector}
-        onRow={(user) => ({ onDoubleClick: () => console.log(user) })} />
+        onRow={(user) => ({ onDoubleClick: () => handleRowDoubleClick(user) })} />
     </div>
   </ResizeObserver>
 }
 
 const keySelector = (user: IUser) => user.login.uuid
 
-const cancel = (e: React.MouseEvent<HTMLElement>) => {
-  console.log(e);
+const cancel = () => {
   message.error('Отмена удаления');
 };
